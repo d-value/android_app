@@ -10,6 +10,7 @@ abstract class NoteDatabase : RoomDatabase(){
 
     abstract fun noteDao(): NoteDao
 
+    // Singleton pattern for Database
     companion object{
         @Volatile
         private var INSTANCE: NoteDatabase? = null

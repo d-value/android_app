@@ -29,39 +29,28 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddNoteBinding.bind(view)
 
-        /** Restores Note's data into views
-         */
+        //Restores Note's data
         setViews()
 
-        /** Sets observer for monitoring in real time, that 'time' views are displayed
-         */
         viewModel.hasTime.observe(this.viewLifecycleOwner) {
             showTimeViews(it)
         }
 
-        /**
-         */
         binding.timeSwitch.setOnClickListener {
             viewModel.noteToAdd.hasTime = binding.timeSwitch.isChecked
             viewModel.showTime(binding.timeSwitch.isChecked)
         }
 
-        /** Saves note's Content text in a field
-         */
         binding.noteContentTextView.doAfterTextChanged {
             if (viewModel.isEntryValid(it.toString())) {
                 viewModel.noteToAdd.content = it.toString()
             }
         }
 
-        /** Saves note's Time text if a field
-         */
         binding.timeTextView.doAfterTextChanged {
             viewModel.noteToAdd.time = it.toString()
         }
 
-        /** Saves notify switch's isChecked() in noteToAdd
-         */
         binding.notifySwitch.setOnClickListener {
             viewModel.noteToAdd.hasNotification = binding.notifySwitch.isChecked
         }
@@ -79,6 +68,9 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         }
     }
 
+    /**
+     * Open TimePicker
+     */
     private fun openTimePicker() {
         val hours = viewModel.noteToAdd.time.substring(0, 2).toInt()
         val minutes = viewModel.noteToAdd.time.substring(3).toInt()
@@ -93,6 +85,9 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         setupTimePicker(picker)
     }
 
+    /**
+     * Add PositiveButtonClickListener to the TimePicker
+     */
     private fun setupTimePicker(picker: MaterialTimePicker){
         picker.addOnPositiveButtonClickListener{
             val hours =
@@ -109,6 +104,9 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         }
     }
 
+    /**
+     * Setup views with NoteToAdd's data
+     */
     private fun setViews() {
         binding.noteContentTextView.setText(viewModel.noteToAdd.content)
         viewModel.showTime(viewModel.noteToAdd.hasTime)
@@ -131,6 +129,9 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         }
     }
 
+    /**
+     * Make Time options visible if Note has time
+     */
     private fun showTimeViews(isShown: Boolean) {
         val viewVisibility =
             if (isShown) View.VISIBLE

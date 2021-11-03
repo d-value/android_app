@@ -1,9 +1,6 @@
 package com.example.mytodolist.fragments
 
-import android.annotation.SuppressLint
-import android.media.Image
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -11,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.MyToDoListApplication
 import com.example.mytodolist.R
@@ -40,6 +36,8 @@ class NotesFragment : Fragment(R.layout.fragment_notes), OnNoteListener {
         binding = FragmentNotesBinding.bind(view)
 
         binding.noteRecyclerView.adapter = adapter
+
+        // Observe notes changes
         viewModel.allNotes.observe(this.viewLifecycleOwner){
             adapter.submitList(it)
         }
@@ -59,7 +57,16 @@ class NotesFragment : Fragment(R.layout.fragment_notes), OnNoteListener {
         setHasOptionsMenu(true)
     }
 
+    /**
+     * Create UpBar menus
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.app_bar_menu, menu)
+    }
 
+    /**
+     * Remove Notes observers and Update List Adapter with new data
+     */
     private fun updateList(){
         viewModel.allNotes.removeObservers(this.viewLifecycleOwner)
         viewModel.getNotes()
@@ -68,10 +75,9 @@ class NotesFragment : Fragment(R.layout.fragment_notes), OnNoteListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.app_bar_menu, menu)
-    }
-
+    /**
+     * Catch clicks on menu items
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.clearSubItem -> viewModel.clear()
@@ -90,6 +96,9 @@ class NotesFragment : Fragment(R.layout.fragment_notes), OnNoteListener {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Catch clicks on NoteItem's views
+     */
     override fun onNoteClick(note: Note, view: View) {
         when(view.id){
             R.id.notifyImageView -> {

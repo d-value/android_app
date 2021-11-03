@@ -36,6 +36,7 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEditNoteBinding.bind(view)
 
+        //Restores Note's data
         setViews()
 
         viewModel.hasTime.observe(this.viewLifecycleOwner){
@@ -78,6 +79,9 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
         }
     }
 
+    /**
+     * Open TimePicker
+     */
     private fun openTimePicker() {
         val hours = viewModel.noteToEdit.time.substring(0, 2).toInt()
         val minutes = viewModel.noteToEdit.time.substring(3).toInt()
@@ -92,6 +96,9 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
         setupTimePicker(picker)
     }
 
+    /**
+     * Add PositiveButtonClickListener to the TimePicker
+     */
     private fun setupTimePicker(picker: MaterialTimePicker){
         picker.addOnPositiveButtonClickListener{
             val hours =
@@ -108,6 +115,9 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
         }
     }
 
+    /**
+     * Setup views with NoteToEdit's data
+     */
     private fun setViews() {
         binding.noteContentTextView.setText(viewModel.noteToEdit.content)
         viewModel.showTime(viewModel.noteToEdit.hasTime)
@@ -136,6 +146,9 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
         }
     }
 
+    /**
+     * Make Time options visible if Note has time
+     */
     private fun showTimeViews(isShown: Boolean) {
         val viewVisibility =
             if (isShown) View.VISIBLE

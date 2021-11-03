@@ -1,8 +1,6 @@
 package com.example.mytodolist.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -35,6 +33,7 @@ class NoteListAdapter(private val onNoteListener: OnNoteListener): ListAdapter<N
             binding.noteContentTextView.text = note.content
             binding.noteDoneCheckBox.isChecked = note.done
 
+            // Setup timeText and notificationImage
             if (item.hasTime) {
                 binding.noteTimeTextView.text = note.time
                 if (note.hasNotification) {
@@ -56,6 +55,10 @@ class NoteListAdapter(private val onNoteListener: OnNoteListener): ListAdapter<N
             setListeners()
         }
 
+
+        /**
+         * Sets listener to NoteHolder views
+         */
         private fun setListeners(){
             binding.noteItemLayout.setOnClickListener{
                 onNoteListener.onNoteClick(item, binding.noteItemLayout)

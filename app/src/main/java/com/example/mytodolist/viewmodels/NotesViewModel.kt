@@ -10,15 +10,23 @@ import java.lang.IllegalArgumentException
 
 class NotesViewModel(private val noteDao: NoteDao) : ViewModel(){
 
+    //Stores all shown notes from database
     var allNotes = noteDao.getAllByName().asLiveData()
 
+    // DisplayType for showing All or only Undone Notes
     val displayType = MutableLiveData(DisplayType.ALL)
+    // SortType for showing in order by Time or by Name
     val sortType = MutableLiveData(SortType.BY_NAME)
 
+    // Used to show or hide Time Options in AddNoteFragment and EditNoteFragment
     val hasTime = MutableLiveData(false)
+
     var noteToEdit = Note(0,"", done = false, false,"",false)
     var noteToAdd = Note(0,"", done = false, false,"23:59",false)
 
+    /**
+     *     Get needed Notes from Database depending on displayType and sortType
+     */
     fun getNotes(){
         when(displayType.value){
             DisplayType.ALL-> {
@@ -78,14 +86,24 @@ class NotesViewModel(private val noteDao: NoteDao) : ViewModel(){
         noteToAdd = Note(0,"", done = false, false,"23:59",false)
     }
 }
+
+/**
+ * Enum class for displayType
+ */
 enum class DisplayType{
     ALL, UNDONE
 }
 
+/**
+ * Enum class for sortType
+ */
 enum class SortType{
     BY_NAME, BY_TIME
 }
 
+/**
+ * Factory to create ViewModel passing NoteDao object to it
+ */
 class NotesViewModelFactory(private val noteDao: NoteDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(NotesViewModel::class.java)) {
