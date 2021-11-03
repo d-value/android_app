@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/sortItem"
+        android:icon="@drawable/ic_baseline_sort_24"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/hideDoneItem"
+                android:checkable="true"
+                android:title="@string/hide_done"
+                android:checked="false" />
+            <item
+                android:id="@+id/sortByTimeItem"
+                android:title="@string/sort_by_time" />
+            <item
+                android:id="@+id/sortByNameItem"
+                android:title="@string/sort_by_name" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/optionsItem"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="@string/options"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/clearSubItem"
+                android:title="@string/clear" />
+            <item
+                android:id="@+id/deleteDoneItem"
+                android:title="@string/delete_done_notes" />
+        </menu>
+    </item>
+</menu>

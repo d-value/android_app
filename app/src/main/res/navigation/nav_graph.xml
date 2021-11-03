@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/notesFragment">
+
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.mytodolist.fragments.NotesFragment"
+        android:label="Notes"
+        tools:layout="@layout/fragment_notes" >
+        <action
+            android:id="@+id/action_notesFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_notesFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
+            <argument android:name="noteId"
+                android:defaultValue="0"
+                app:argType="integer"/>
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.mytodolist.fragments.AddNoteFragment"
+        android:label="Add note"
+        tools:layout="@layout/fragment_add_note" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.example.mytodolist.fragments.EditNoteFragment"
+        android:label="Edit note"
+        tools:layout="@layout/fragment_edit_note">
+        <argument android:name="noteId"
+            android:defaultValue="0"
+            app:argType="integer"/>
+    </fragment>
+</navigation>
